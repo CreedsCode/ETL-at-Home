@@ -88,6 +88,8 @@ services:
     image: redis:latest
     expose:
       - 6379
+    labels:
+      - "taefik.enable=false"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -250,6 +252,8 @@ services:
     command: celery flower
     ports:
       - 5555:5555
+    labels:
+      - "taefik.enable=false"
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
       interval: 10s
