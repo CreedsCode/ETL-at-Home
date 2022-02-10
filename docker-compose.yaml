@@ -110,6 +110,14 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.airflow-secure.entrypoints=websecure"
+      - "traefik.http.routers.airflow-secure.rule=Host(`airflow.creedscode.cc`)"
 
   airflow-scheduler:
     <<: *airflow-common
@@ -268,3 +276,7 @@ services:
 
 volumes:
   postgres-db-volume:
+
+networks:
+  proxy:
+    external: true
