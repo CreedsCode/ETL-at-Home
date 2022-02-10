@@ -98,6 +98,8 @@ services:
   airflow-webserver:
     <<: *airflow-common
     command: webserver
+    ports:
+      - 8080:8080
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 10s
@@ -248,6 +250,8 @@ services:
     command: celery flower
     ports:
       - 5555:5555
+    networks:
+      - default
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
       interval: 10s
