@@ -109,7 +109,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_started
+        condition: service_completed_successfully
     networks:
       - proxy
       - default
@@ -131,7 +131,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_started
+        condition: service_completed_successfully
 
   airflow-worker:
     <<: *airflow-common
@@ -152,7 +152,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_started
+        condition: service_completed_successfully
 
   airflow-triggerer:
     <<: *airflow-common
@@ -166,7 +166,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_started
+        condition: service_completed_successfully
 
   airflow-init:
     <<: *airflow-common
@@ -245,6 +245,19 @@ services:
     volumes:
       - .:/sources
 
+  airflow-cli:
+    <<: *airflow-common
+    profiles:
+      - debug
+    environment:
+      <<: *airflow-common-env
+      CONNECTION_CHECK_MAX_COUNT: "0"
+    # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
+    command:
+      - bash
+      - -c
+      - airflow
+
   flower:
     <<: *airflow-common
     command: celery flower
@@ -259,7 +272,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_started
+        condition: service_completed_successfully
 
 volumes:
   postgres-db-volume:
