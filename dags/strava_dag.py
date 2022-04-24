@@ -109,7 +109,8 @@ def _upload(task_instance: TaskInstance, **kwargs):
     
 default_args = {
     'owner': 'airflow',
-    'start_date': dt.datetime(2022, 4, 18, 10, 00, 00)
+    'start_date': dt.datetime(2022, 4, 18, 10, 00, 00),
+    "schedule_interval":"@daily"
 }
 
 with DAG('strava_shit',
