@@ -8,8 +8,6 @@ name: Docker
 on:
   push:
     branches: [ main ]
-    
-
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -70,7 +68,7 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
-          tag: latest
+          tags: 'latest'
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.
