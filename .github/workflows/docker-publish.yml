@@ -8,6 +8,7 @@ name: Docker
 on:
   push:
     branches: [ main ]
+    tags: [ 'v*.*.*' ]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -68,7 +69,7 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
-          tags: 'latest'
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.
