@@ -19,8 +19,8 @@ jobs:
       - name: Build and Push image
         run: |
            echo $CR_PAT | docker login ghcr.io -u creedscode --password-stdin
-           docker build . --tag ghcr.io/creedscode/ETL-at-Home:latest 
-           docker run ghcr.io/creedscode/ETL-at-Home:latest 
-           docker push ghcr.io/creedscode/ETL-at-Home:latest
+           docker build . --tag ghcr.io/creedscode/etl-at-home:latest 
+           docker run ghcr.io/creedscode/etl-at-home:latest 
+           docker push ghcr.io/creedscode/etl-at-home:latest
         env:
           CR_PAT: ${{ secrets.PAT }}
